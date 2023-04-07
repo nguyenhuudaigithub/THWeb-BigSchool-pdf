@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DemoWebTuan4Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Lop">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tenlop" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="nganh" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="SinhVien" Relationship="Self.FK_Lop_SinhVien" FromRole="Lop" ToRole="SinhVien" />
+  </EntityType>
+  <EntityType Name="SinhVien">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="hoten" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="malop" Type="Int32" />
+    <Property Name="avatar" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Lop" Relationship="Self.FK_Lop_SinhVien" FromRole="SinhVien" ToRole="Lop" />
+  </EntityType>
+  <Association Name="FK_Lop_SinhVien">
+    <End Role="SinhVien" Type="Self.SinhVien" Multiplicity="1" />
+    <End Role="Lop" Type="Self.Lop" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="SinhVien">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Lop">
+        <PropertyRef Name="id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DemoWebTuan4Entities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Lops" EntityType="Self.Lop" />
+    <EntitySet Name="SinhViens" EntityType="Self.SinhVien" />
+    <AssociationSet Name="FK_Lop_SinhVien" Association="Self.FK_Lop_SinhVien">
+      <End Role="SinhVien" EntitySet="SinhViens" />
+      <End Role="Lop" EntitySet="Lops" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
